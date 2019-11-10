@@ -79,36 +79,22 @@ Distance) on the numeric columns to see how anomalous each entry is,
 then drop the outliers.
 
 The Mahalanobis Distance is straightforward to compute via the formula
-
 Sqrt((x-mu)S^-1(x-mu)), where x is the observation, mu is the mean, and
-S is the covariance matrix,
-
-D=\\sqrt{(x-\\mu)S^{-1}(x-\\mu)}
-
-. This can be efficiently calculated using vectorization with numpy, as
+S is the covariance matrix. This can be efficiently calculated using vectorization with numpy, as
 in the following code.
-
-*Sx = np.cov(np.transpose(num\_data.to\_numpy())) \# Transpose because
+```*Sx = np.cov(np.transpose(num\_data.to\_numpy())) \# Transpose because
 numpy expects opposite rows and cols*
-
 *Sx = np.linalg.inv(Sx)*
-
 *mean = np.mean(num\_data.to\_numpy(),0)*
-
 *\# We'll be using vectorization to perform linear algebra calculations
 faster*
-
 *\# Tile mean vector so we can subtract from data*
-
 *temp2 = np.tile(mean, \[num\_data.shape\[0\],1\])*
-
 *diff = num\_data.to\_numpy() - temp2*
-
 *temp3 = np.matmul(diff, Sx)*
-
 *maha\_dist = np.sqrt(np.sum(np.multiply(temp3, diff), 1))*
-
-![](media/image1.png)
+```
+![](https://raw.githubusercontent.com/TimpaniniTiger/Sample-Data-Science-Take-Home-Problem/master/Images/00%20-%20Figure%201%20-%20Mahalanobis%20Distance.png)
 
 This figure gives the distribution of z-scores. One immediate concern is
 that 0 isn’t the most frequent score, which likely indicates that this
@@ -131,13 +117,13 @@ the data set’s intended use.
 This question mainly serves as a technical exercise and is easily
 handled by using Pandas’ *groupby* and *aggregate* functions on the
 **beer\_abv­** column as in the following code.
-
+```
 abv\_data =
 data\[\['brewery\_name','beer\_abv'\]\].groupby('brewery\_name').agg(\[np.mean,
 np.median, np.std, lambda x:
 x.size\]).rename(columns={'\<lambda\_0\>':'count'})
-
-![](media/image2.png)
+```
+![](https://github.com/TimpaniniTiger/Sample-Data-Science-Take-Home-Problem/blob/master/Images/Q01%20-%20abv%20data%20excel%20formatted.png?raw=true)
 
 This figure shows the beers ordered by their mean **beer­\_abv**: the
 columns mean, median, std, and count are all computed for **beer\_abv**.
@@ -153,13 +139,13 @@ will defer to the **overall\_review** column as the proxy for beer
 quality. We can then handle this question like the previous question,
 using Pandas’ *groupby* and *aggregate* functions on the
 **overall\_review** column as in the following code.
-
+```
 review\_data =
 data\[\['beer\_name','review\_overall'\]\].groupby('beer\_name').agg(\[np.mean,
 np.median, np.std, lambda x:
 x.size\]).rename(columns={'\<lambda\_0\>':'count'})
-
-# ![](media/image3.png)
+```
+# ![](https://github.com/TimpaniniTiger/Sample-Data-Science-Take-Home-Problem/blob/master/Images/Q02%20-%20top%20beers%20data%20excel%20formatted.png?raw=true)
 
 This figure shows the beers ordered by their mean **overall\_review**:
 the columns mean, median, std, and count are all computed for
@@ -177,7 +163,7 @@ can easily be interpreted as telling how important the various features
 are. We implement the linear regression in Scikit-Learn, and these are
 the resulting linear coefficients.
 
-![](media/image4.png)
+![](https://github.com/TimpaniniTiger/Sample-Data-Science-Take-Home-Problem/blob/master/Images/Q03a%20-%20Figure%201%20-%20Linear%20Regression%20Coefficients.png?raw=true)
 
 From this we can see that **review\_taste­** is the most important
 quality, with **review\_palate** being about half as important, and
@@ -185,7 +171,7 @@ quality, with **review\_palate** being about half as important, and
 While not required for this problem, we can also see that **beer\_abv**
 is negative correlated.
 
-![](media/image5.png)
+![](https://github.com/TimpaniniTiger/Sample-Data-Science-Take-Home-Problem/blob/master/Images/Q03a%20-%20Figure%202%20-%20Linear%20Regression%20Residuals.png?raw=true)
 
 But how good is linear regression? We get an r-squared score of 0.670,
 which theoretically means that 67% of the variance in
@@ -203,7 +189,7 @@ method of chaining decision tree models together to produce an overall
 better model. XGBoost is the current fad for machine learning, in
 particular achieving impressive results in the realm of Kaggle.
 
-![](media/image6.png)
+![](https://github.com/TimpaniniTiger/Sample-Data-Science-Take-Home-Problem/blob/master/Images/Q03b%20-%20Figure%201%20-%20XGBoost%20Residuals.png?raw=true)
 
 With XGBoost 92.6% of the predictions are within plus/minus one standard
 deviation and 67.7% of predictions are within half a standard deviation.
@@ -229,7 +215,7 @@ closer to one. This could be an indication that the data is particularly
 noisy: XGBoost would then be having trouble finding a single answer
 because no single answer might exist.
 
-![](media/image7.png)
+![](https://github.com/TimpaniniTiger/Sample-Data-Science-Take-Home-Problem/blob/master/Images/Q03c%20-%20Figure%201%20-%20Feature%20Importances.png?raw=true)
 
 XGBoost, being fundamentally a decision tree model, can give us feature
 importance by aggregating the decision rules of each branch-point. One
@@ -253,9 +239,9 @@ review ratings. Here we will arbitrarily multiply both aroma’s and
 appearance’s linear coefficients by two to make them both twice as
 important.
 
-![](media/image8.png)
+![](https://github.com/TimpaniniTiger/Sample-Data-Science-Take-Home-Problem/blob/master/Images/Q04%20-%20Figure%202%20-%20Modified%20Linear%20Coefficients.png?raw=true)
 
-![](media/image9.png)
+![](https://github.com/TimpaniniTiger/Sample-Data-Science-Take-Home-Problem/blob/master/Images/Q04%20-%20Figure%201%20-%20Predicted%20Ratings.png?raw=true)
 
 The difference between these tables is which rating we’re sorting by:
 the modified rating where aroma and appearance are more important, and
