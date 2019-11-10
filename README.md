@@ -82,17 +82,18 @@ The Mahalanobis Distance is straightforward to compute via the formula
 Sqrt((x-mu)S^-1(x-mu)), where x is the observation, mu is the mean, and
 S is the covariance matrix. This can be efficiently calculated using vectorization with numpy, as
 in the following code.
-```*Sx = np.cov(np.transpose(num\_data.to\_numpy())) \# Transpose because
-numpy expects opposite rows and cols*
-*Sx = np.linalg.inv(Sx)*
-*mean = np.mean(num\_data.to\_numpy(),0)*
-*\# We'll be using vectorization to perform linear algebra calculations
-faster*
-*\# Tile mean vector so we can subtract from data*
-*temp2 = np.tile(mean, \[num\_data.shape\[0\],1\])*
-*diff = num\_data.to\_numpy() - temp2*
-*temp3 = np.matmul(diff, Sx)*
-*maha\_dist = np.sqrt(np.sum(np.multiply(temp3, diff), 1))*
+```
+Sx = np.cov(np.transpose(num\_data.to\_numpy())) \# Transpose because
+numpy expects opposite rows and cols
+Sx = np.linalg.inv(Sx)
+mean = np.mean(num\_data.to\_numpy(),0)
+\# We'll be using vectorization to perform linear algebra calculations
+faster
+\# Tile mean vector so we can subtract from data
+temp2 = np.tile(mean, \[num\_data.shape\[0\],1\])
+diff = num\_data.to\_numpy() - temp2
+temp3 = np.matmul(diff, Sx)
+maha\_dist = np.sqrt(np.sum(np.multiply(temp3, diff), 1))
 ```
 ![](https://raw.githubusercontent.com/TimpaniniTiger/Sample-Data-Science-Take-Home-Problem/master/Images/00%20-%20Figure%201%20-%20Mahalanobis%20Distance.png)
 
