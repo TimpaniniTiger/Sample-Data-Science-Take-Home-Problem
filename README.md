@@ -21,7 +21,7 @@ The most natural way to view this data set is to try to predict
 **review\_overall** using the other five numeric columns, the first four
 **review\_aroma, review\_appearance, review\_palate, review\_taste**
 coming from user supplied reviews rating various aspects of a beer, and
-**beer\_abv** which gives the beer’s percent alcohol by volume**.**
+**beer\_abv** which gives the beer’s percent alcohol by volume.
 
 | **brewery\_id** | **brewery\_name**       | **review\_time** | **review\_overall** | **review\_aroma** | **review\_appearance** | **review\_profilename** | **beer\_style**                | **review\_palate** | **review\_taste** | **beer\_name**         | **beer\_abv** | **beer\_beerid** |
 | --------------- | ----------------------- | ---------------- | ------------------- | ----------------- | ---------------------- | ----------------------- | ------------------------------ | ------------------ | ----------------- | ---------------------- | ------------- | ---------------- |
