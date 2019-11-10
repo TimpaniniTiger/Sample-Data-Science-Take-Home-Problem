@@ -95,7 +95,7 @@ diff = num\_data.to\_numpy() - temp2
 temp3 = np.matmul(diff, Sx)
 maha\_dist = np.sqrt(np.sum(np.multiply(temp3, diff), 1))
 ```
-![](https://raw.githubusercontent.com/TimpaniniTiger/Sample-Data-Science-Take-Home-Problem/master/Images/00%20-%20Figure%201%20-%20Mahalanobis%20Distance.png)
+![](https://github.com/TimpaniniTiger/Sample-Data-Science-Take-Home-Problem/blob/master/Images/00%20-%20Figure%201%20-%20Multidimensiona%20Z-score%20Mahalanobis%20Distance.png?raw=true)
 
 This figure gives the distribution of z-scores. One immediate concern is
 that 0 isn’t the most frequent score, which likely indicates that this
