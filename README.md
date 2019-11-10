@@ -252,7 +252,9 @@ when aroma and appearance are more important are highlighted in blue.
 We can see that making aroma and appearance more important slightly
 shifts the rankings, but typically a beer does not change rankings much.
 This can be changed by changing the relative importance of aroma and
-appearance.
+appearance. Also note that we didn't normalize the scores after changing
+the coefficients, so the modified score will in general be larger than
+the original score; this won't affect the rankings however.
 
 A cause for concern is that each of these beers only has one review in
 the data set. One could remove any beer with only one review, but then
